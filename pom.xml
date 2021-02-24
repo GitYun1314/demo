@@ -100,6 +100,12 @@
             <version>3.3.1.tmp</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.47</version>
+        </dependency>
+
         <!--解决jdk版本过高的问题出现-->
         <dependency>
             <groupId>javax.xml.bind</groupId>

@@ -9,16 +9,14 @@ import intelligent_express_cabinets.demo.service.IUsersService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.security.Principal;
 
 
 @RestController
-@RequestMapping("/system/users")
+@RequestMapping
 public class UsersController {
 
     @Resource
@@ -55,4 +53,28 @@ public class UsersController {
         }
         return returnBean.error("此新用户的账号已经存在!");
     }
+
+    @ApiOperation(value = "获取当前登录用户的信息")
+    @GetMapping("/user/info")
+    public Users getCustomerInfo(Principal principal){
+        if(null==principal){
+            return null;
+        }
+        String username = principal.getName();
+        Users users = usersService.getUserByUsername(username);
+        users.setRoles(usersService.getRoles(users.getUserId()));
+        users.setPassword(null);
+        return users;
+    }
+
+    @ApiOperation(value = "更新会员的个人信息")
+    @PutMapping("/update/member/message")
+    public returnBean updateMembers(@RequestBody Users users){
+        if (usersService.updateById(users)){
+            return returnBean.success("更新成功!");
+        }
+        return returnBean.error("更新失败!");
+    }
+
+
 }

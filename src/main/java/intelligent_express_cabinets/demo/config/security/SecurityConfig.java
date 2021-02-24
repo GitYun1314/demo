@@ -46,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         web.ignoring().antMatchers(
                 "/login",
                 "/logout",
+                "/register",
                 "/sendEmail",
                 "/verifyCaptcha",
                 "/index.html",
